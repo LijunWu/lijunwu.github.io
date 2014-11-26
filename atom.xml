@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://lijunwu.github.io/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2014-11-26T17:29:33+08:00</updated>
+  <updated>2014-11-26T17:33:06+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[Amy]]></name>
@@ -12,5 +12,14 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[写在之前]]></title>
+    <link href="http://lijunwu.github.io/blog/2014/11/26/xie-zai-zhi-qian/"/>
+    <updated>2014-11-26T17:32:54+08:00</updated>
+    <id>http://lijunwu.github.io/blog/2014/11/26/xie-zai-zhi-qian</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
 </feed>
