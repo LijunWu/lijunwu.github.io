@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://lijunwu.github.io/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2014-11-27T10:57:31+08:00</updated>
+  <updated>2014-11-27T11:03:22+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[Amy]]></name>
@@ -18,7 +18,7 @@
     <link href="http://lijunwu.github.io/blog/2014/11/26/xie-zai-zhi-qian/"/>
     <updated>2014-11-26T17:32:54+08:00</updated>
     <id>http://lijunwu.github.io/blog/2014/11/26/xie-zai-zhi-qian</id>
-    <content type="html"><![CDATA[<div style="height:220px;padding:20px;border:1px solid #ccc;background:url(../images/background-1.jpg);background-size:100% 100%;margin:0px 0px 10px 0px">
+    <content type="html"><![CDATA[<div style="height:220px;padding:20px;border:1px solid #ccc;background:url(/images/background-1.jpg);background-size:100% 100%;margin:0px 0px 10px 0px">
     <div style="float:right">
         <img src="../images/thumb.jpg" style="border-radius:100px;border:2px #FFF solid"/>
     </div>
