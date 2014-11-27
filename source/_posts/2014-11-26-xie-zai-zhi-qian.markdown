@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 
-<div style="height:220px;padding:20px;border:1px solid #ccc;background:url(../images/background-1.jpg);background-size:100% 100%;margin:0px 0px 10px 0px">
+<div style="height:220px;padding:20px;border:1px solid #ccc;background:url(/images/background-1.jpg);background-size:100% 100%;margin:0px 0px 10px 0px">
 	<div style="float:right">
 		<img src="../images/thumb.jpg" style="border-radius:100px;border:2px #FFF solid"/>
 	</div>
