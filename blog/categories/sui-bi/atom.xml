@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: 随笔 | Amy's Blog]]></title>
+  <title><![CDATA[Category:随笔 | Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/blog/categories/sui-bi/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2014-11-28T10:36:52+08:00</updated>
+  <updated>2014-11-28T14:37:47+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
