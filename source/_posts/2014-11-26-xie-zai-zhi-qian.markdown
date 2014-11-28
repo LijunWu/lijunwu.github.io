@@ -3,21 +3,21 @@ layout: post
 title: "写在之前"
 date: 2014-11-26 17:32:54 +0800
 comments: true
-categories: 
+categories: 随笔
 ---
 
 
-<div style="height:220px;padding:20px;border:1px solid #ccc;background:url(/images/background-1.jpg);background-size:100% 100%;margin:0px 0px 30px 0px">
+<div style="width:100%; height:220px; padding:20px;border:1px solid #ccc;background:url(/images/background-1.jpg);background-size:100% 100%;margin:0px 0px 30px 0px">
 	<div style="float:right">
 		<img src="/images/thumb.jpg" style="border-radius:100px;border:2px #FFF solid"/>
 	</div>
-	<div style="float:right;width:500px;margin:20px 15px">
-			<img src="/images/ico_person.png" align="right" style="height:26px;margin:2px 10px 0 10px;border-style:none;box-shadow:none"/>
+	<div style="height:180px;margin:20px 25px">
+			<img src="/images/ico_person.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>
 			<h4 align="right" style="color:#222">Amy<h4>
-			<img src="/images/ico_map.png" align="right" style="height:26px;margin:2px 10px 0 10px;border-style:none;box-shadow:none"/>
+			<img src="/images/ico_map.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>
 			<h4 align="right" style="color:#222;">现居 杭州</h4>
-			<img src="/images/ico_love.png" align="right" style="height:26px;margin:2px 10px 0 10px;border-style:none;box-shadow:none"/>			<h4 align="right" style="color:#222;">爱好 羽毛球 多肉</h4>
-			<img src="/images/ico_tag.png" align="right" style="height:26px;margin:2px 10px 0 10px;border-style:none;box-shadow:none"/>			<h4 align="right" style="color:#222;">80's妹子 程序媛 </h4>
+			<img src="/images/ico_love.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>			<h4 align="right" style="color:#222;">爱好 羽毛球 多肉</h4>
+			<img src="/images/ico_tag.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>			<h4 align="right" style="color:#222;">80's妹子 程序媛 </h4>
 	</div>
 </div>
 
