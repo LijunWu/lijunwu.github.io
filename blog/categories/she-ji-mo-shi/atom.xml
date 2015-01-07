@@ -4,7 +4,7 @@
   <title><![CDATA[Category:设计模式 | Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/blog/categories/she-ji-mo-shi/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2015-01-07T11:45:43+08:00</updated>
+  <updated>2015-01-07T13:58:25+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -18,7 +18,7 @@
     <link href="http://lijunwu.github.io/blog/2015/01/06/she-ji-mo-shi-gong-han-fang-fa/"/>
     <updated>2015-01-06T13:37:53+08:00</updated>
     <id>http://lijunwu.github.io/blog/2015/01/06/she-ji-mo-shi-gong-han-fang-fa</id>
-    <content type="html"><![CDATA[<blockquote><h2>什么是工厂方法</h2></blockquote>
+    <content type="html"><![CDATA[<h2>什么是工厂方法</h2>
 
 <p style="color:#666666;font-weight:bold;font-size:18px;line-height: 130%;text-indent:20pt">定义创建对象的接口，让子类决定实例化哪一个对象。工厂方法使得一个类的初始化延迟到其子类。工厂方法也被称为虚构造器。</p>
 
@@ -30,9 +30,7 @@
 
 <p><p style = "text-indent:20pt;">抽象的Product定义了工厂方法创建的对象接口。ConcreteProduct实现了Product定义的接口。Creator定义了一个工厂方法，这个方法会返回一个Product对象，当然也可以为这个工厂方法提供一个默认的实现，返回一个默认的ConcreteProduct对象。Creator的其他方法可以调用这个工厂方法创建Product对象。ConcreteCreator是Creator的子类，它重载了工厂方法，并返回一个ConcreteProduct的实例。</p>
 
-<p> </br></p>
-
-<blockquote><h2>何时使用工厂方法</h2></blockquote>
+<h2>何时使用工厂方法</h2>
 
 <p><p>当遇到以下情形时，可以考虑使用工厂模式
 <ol>
@@ -48,9 +46,7 @@
 </pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="bp">NSNumber</span> <span class="nl">numberWithBool</span><span class="p">:</span><span class="nb">YES</span><span class="p">]</span>
 </span></code></pre></td></tr></table></div></figure>这个方法会得到一个NSCFBoolean的实例，这个实例包含传给类工厂方法的布尔值。</p>
 
-<p></br></p>
-
-<blockquote><h2>使用工厂方法的效果</h2></blockquote>
+<h2>使用工厂方法的效果</h2>
 
 <p><p style="text-indent:20pt">工厂方法不再将与特定应用有关的类绑定到你的代码中，代码仅处理Product接口；因此它可以与用户定义的任何ConcreteProduct类一起使用。
 <p style="text-indent:20pt">工厂方法的一个潜在缺点在于用户仅仅为了创建一个特定的ConcreteProduct对象，就不得不创建Creator的子类。当创建Creator子类不必需时，客户现在必然要处理类演化的其他方面；但是当客户无论如何必须创建Creator的子类时，创建子类也是可行的。</p>
@@ -66,7 +62,7 @@ Creator可以定义工厂方法的合理的缺省实现。
 工厂方法将哪些类应一同工作的信息局部化了。
 </ol></p>
 
-<blockquote><h2>工厂方法的实现</h2></blockquote>
+<h2>工厂方法的实现</h2>
 
 <p><p style = "text-indent:20pt;">当应用Factory Method模式时，应考虑一下问题
 <ol>
@@ -80,7 +76,218 @@ Creator可以定义工厂方法的合理的缺省实现。
     工厂方法采用一个标识要背创建的对象种类的参数。
 </ol></p>
 
-<blockquote></blockquote>
+<h2>典型应用[来自网络]</h2>
+
+<p><p style = "text-indent:20pt;">要说明工厂模式的优点，可能没有比组装汽车更合适的例子了。场景是这样的：汽车由发动机、轮、底盘组成，现在需要组装一辆车交给调用者。假如不使用工厂模式，代码如下：
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@implementation</span> <span class="nc">Engine</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="n">getEngine</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Engine</span> <span class="o">*</span><span class="n">engine</span> <span class="o">=</span> <span class="p">[</span><span class="n">Engine</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">NSLog</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">这是汽车的发动机</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">engine</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@implementation</span> <span class="nc">Underpan</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="n">getUnderpan</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Underpan</span> <span class="o">*</span><span class="n">underpan</span> <span class="o">=</span> <span class="p">[</span><span class="n">Underpan</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">NSLog</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">这是汽车的底盘</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">underpan</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@implementation</span> <span class="nc">Wheel</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="n">getWheel</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Wheel</span> <span class="o">*</span><span class="n">wheel</span> <span class="o">=</span> <span class="p">[</span><span class="n">Wheel</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">NSLog</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="err">这是汽车的轮胎</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">wheel</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@implementation</span> <span class="nc">Car</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nl">makeCarWithEngine</span><span class="p">:(</span><span class="n">Engine</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="n">engine</span> <span class="nl">underpan</span><span class="p">:(</span><span class="n">Underpan</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="n">underpan</span> <span class="nl">wheel</span><span class="p">:(</span><span class="n">Wheel</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="n">wheel</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Car</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">car</span> <span class="o">=</span> <span class="p">[</span><span class="n">Car</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">car</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@implementation</span> <span class="nc">Client</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Car</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="n">mainMethod</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Engine</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">engine</span> <span class="o">=</span> <span class="p">[</span><span class="n">Engine</span> <span class="n">getEngine</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">Underpan</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">underpan</span> <span class="o">=</span> <span class="p">[</span><span class="n">Underpan</span> <span class="n">getUnderpan</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">Wheel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">wheel</span> <span class="o">=</span> <span class="p">[</span><span class="n">Wheel</span> <span class="n">getWheel</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">Car</span> <span class="o">*</span><span class="n">car</span> <span class="o">=</span> <span class="p">[</span><span class="n">Car</span> <span class="nl">makeCarWithEngine</span><span class="p">:</span><span class="n">engine</span> <span class="nl">underpan</span><span class="p">:</span><span class="n">underpan</span> <span class="nl">wheel</span><span class="p">:</span><span class="n">wheel</span><span class="p">];</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">car</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">@end</span>
+</span></code></pre></td></tr></table></div></figure></li>
+</ul>
+
+
+<p><p style="text-indent:20pt">可以看到，调用者为了组装汽车还需要另外实例化发动机、底盘和轮胎，而这些汽车的组件是与调用者无关的，严重违反了迪米特法则，耦合度太高。并且非常不利于扩展。另外，本例中发动机、底盘和轮胎还是比较具体的，在实际应用中，可能这些产品的组件也都是抽象的，调用者根本不知道怎样组装产品。假如使用工厂方法的话，整个架构就显得清晰了许多。</p>
+
+<p><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@interface</span> <span class="nc">Factory</span> : <span class="bp">NSObject</span>
+</span><span class='line'><span class="p">+</span> <span class="p">(</span><span class="n">Car</span> <span class="o">*</span><span class="p">)</span><span class="nf">makeCar</span><span class="p">;</span>
+</span><span class='line'><span class="k">@end</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@implementation</span> <span class="nc">Factory</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Car</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="n">makeCar</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Engine</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">engine</span> <span class="o">=</span> <span class="p">[</span><span class="n">Engine</span> <span class="n">getEngine</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">Underpan</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="n">underpan</span> <span class="o">=</span> <span class="p">[</span><span class="n">Underpan</span> <span class="n">getUnderpan</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">Wheel</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">wheel</span> <span class="o">=</span> <span class="p">[</span><span class="n">Wheel</span> <span class="n">getWheel</span><span class="p">];</span>
+</span><span class='line'>  <span class="n">Car</span> <span class="o">*</span><span class="n">car</span> <span class="o">=</span> <span class="p">[</span><span class="n">Car</span> <span class="nl">makeCarWithEngine</span><span class="p">:</span><span class="n">engine</span> <span class="nl">underpan</span><span class="p">:</span><span class="n">underpan</span> <span class="nl">wheel</span><span class="p">:</span><span class="n">wheel</span><span class="p">];</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">car</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@end</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span><span class="k">@implementation</span> <span class="nc">Client</span><span class="o">&lt;/</span><span class="n">p</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span><span class="p">(</span><span class="n">Car</span> <span class="o">&lt;</span><span class="n">em</span><span class="o">&gt;</span><span class="p">)</span><span class="n">mainMethod</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>  <span class="n">Car</span> <span class="o">&lt;/</span><span class="n">em</span><span class="o">&gt;</span><span class="n">car</span> <span class="o">=</span> <span class="p">[</span><span class="n">Factory</span> <span class="n">makeCar</span><span class="p">];</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">car</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="k">@end</span><span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="o">&lt;</span><span class="n">p</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure></p>
+
+<p><p style="text-indent:20pt">  使用工厂方法后，调用端的耦合度大大降低了。并且对于工厂来说，是可以扩展的，以后如果想组装其他的汽车，只需要再增加一个工厂类的实现就可以。无论是灵活性还是稳定性都得到了极大的提高。</p>
 ]]></content>
   </entry>
   
