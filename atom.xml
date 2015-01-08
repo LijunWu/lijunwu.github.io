@@ -4,7 +4,7 @@
   <title><![CDATA[Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2015-01-08T13:05:04+08:00</updated>
+  <updated>2015-01-08T13:31:55+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -79,7 +79,7 @@ Creator可以定义工厂方法的合理的缺省实现。
 <h2>典型应用[来自网络]</h2>
 
 <p><p style = "text-indent:20pt;">要说明工厂模式的优点，可能没有比组装汽车更合适的例子了。场景是这样的：汽车由发动机、轮、底盘组成，现在需要组装一辆车交给调用者。假如不使用工厂模式，代码如下：
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -138,7 +138,7 @@ Creator可以定义工厂方法的合理的缺省实现。
 </span><span class='line'>
 </span><span class='line'><span class="p">+</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">getEngine</span>
 </span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">Engine</span> <span class="err">\</span><span class="o"><em></span><span class="n">engine</span> <span class="o">=</span> <span class="p">[</span><span class="n">Engine</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">Engine</span> <span class="o"><em></span><span class="n">engine</span> <span class="o">=</span> <span class="p">[</span><span class="n">Engine</span> <span class="n">new</span><span class="p">];</span>
 </span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;这是汽车的发动机&quot;</span><span class="p">);</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">engine</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
