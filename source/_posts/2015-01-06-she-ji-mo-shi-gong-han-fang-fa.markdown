@@ -60,12 +60,12 @@ Creator可以定义工厂方法的合理的缺省实现。
 ##典型应用[来自网络]
 
 <p style = "text-indent:20pt;">要说明工厂模式的优点，可能没有比组装汽车更合适的例子了。场景是这样的：汽车由发动机、轮、底盘组成，现在需要组装一辆车交给调用者。假如不使用工厂模式，代码如下：
-{% codeblock lang:objc %}
+``` objc
 @implementation Engine
 
 + (instancetype)getEngine
 {
-    Engine \*engine = [Engine new];
+    Engine *engine = [Engine new];
     NSLog(@"这是汽车的发动机");
     return engine;
 }
@@ -116,7 +116,7 @@ Creator可以定义工厂方法的合理的缺省实现。
     return car;
 }
 @end
-{% endcodeblock %}
+```
 
 <p style="text-indent:20pt">可以看到，调用者为了组装汽车还需要另外实例化发动机、底盘和轮胎，而这些汽车的组件是与调用者无关的，严重违反了迪米特法则，耦合度太高。并且非常不利于扩展。另外，本例中发动机、底盘和轮胎还是比较具体的，在实际应用中，可能这些产品的组件也都是抽象的，调用者根本不知道怎样组装产品。假如使用工厂方法的话，整个架构就显得清晰了许多。
 
