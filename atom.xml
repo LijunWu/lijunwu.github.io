@@ -4,7 +4,7 @@
   <title><![CDATA[Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2015-01-08T13:34:02+08:00</updated>
+  <updated>2015-01-12T13:59:51+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -160,7 +160,7 @@ Creator可以定义工厂方法的合理的缺省实现。
 </span><span class='line'>
 </span><span class='line'><span class="p">+</span> <span class="p">(</span><span class="kt">instancetype</span><span class="p">)</span><span class="nf">getWheel</span>
 </span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">Wheel</span> <span class="o"><em></span><span class="n">wheel</span> <span class="o">=</span> <span class="p">[</span><span class="n">Wheel</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">Wheel</span> <span class="err">\</span><span class="o"><em></span><span class="n">wheel</span> <span class="o">=</span> <span class="p">[</span><span class="n">Wheel</span> <span class="n">new</span><span class="p">];</span>
 </span><span class='line'>    <span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;这是汽车的轮胎&quot;</span><span class="p">);</span>
 </span><span class='line'>    <span class="k">return</span> <span class="n">wheel</span><span class="p">;</span>
 </span><span class='line'><span class="p">}</span>
@@ -246,32 +246,6 @@ Creator可以定义工厂方法的合理的缺省实现。
 </span></code></pre></td></tr></table></div></figure></p>
 
 <p><p style="text-indent:20pt">  使用工厂方法后，调用端的耦合度大大降低了。并且对于工厂来说，是可以扩展的，以后如果想组装其他的汽车，只需要再增加一个工厂类的实现就可以。无论是灵活性还是稳定性都得到了极大的提高。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[写在之前]]></title>
-    <link href="http://lijunwu.github.io/blog/2014/11/26/xie-zai-zhi-qian/"/>
-    <updated>2014-11-26T17:32:54+08:00</updated>
-    <id>http://lijunwu.github.io/blog/2014/11/26/xie-zai-zhi-qian</id>
-    <content type="html"><![CDATA[<div style="width:100%; height:220px; padding:20px;border:1px solid #ccc;background:url(/images/background-1.jpg);background-size:100% 100%;margin:0px 0px 30px 0px">
-    <div style="float:right">
-        <img src="http://lijunwu.github.io/images/thumb.jpg" style="border-radius:100px;border:2px #FFF solid"/>
-    </div>
-    <div style="height:180px;margin:20px 25px">
-            <img src="http://lijunwu.github.io/images/ico_person.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>
-            <h4 align="right" style="color:#222">Amy<h4>
-            <img src="http://lijunwu.github.io/images/ico_map.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>
-            <h4 align="right" style="color:#222;">现居 杭州</h4>
-            <img src="http://lijunwu.github.io/images/ico_love.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>            <h4 align="right" style="color:#222;">爱好 羽毛球 多肉</h4>
-            <img src="http://lijunwu.github.io/images/ico_tag.png" align="right" style="height:26px;margin:2px 30px 0 10px;border-style:none;box-shadow:none"/>         <h4 align="right" style="color:#222;">80&#8217;s妹子 程序媛 </h4>
-    </div>
-</div>
-
-
-<h3>碎碎念</h3>
-
-<p>7月入职至今已有好几个月，一直在赶项目，学习的东西也是零零散散，没有时间好好记录和整理。之前学习笔记是用Evernote记录的，一般用用还是可以的，就是样式布局什么的太蛋疼了，现在终于到了忍无可忍的地步了，于是花两天时间安了个新博客，趁此机会也想换个记录方式，所以以后就请加油吧。</p>
 ]]></content>
   </entry>
   
