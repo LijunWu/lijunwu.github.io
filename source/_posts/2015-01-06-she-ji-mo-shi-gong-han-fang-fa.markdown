@@ -65,7 +65,7 @@ Creator可以定义工厂方法的合理的缺省实现。
 
 + (instancetype)getEngine
 {
-    Engine \*engine = [Engine new];
+    Engine *engine = [Engine new];
     NSLog(@"这是汽车的发动机");
     return engine;
 }
@@ -87,7 +87,7 @@ Creator可以定义工厂方法的合理的缺省实现。
 
 + (instancetype)getWheel
 {
-    Wheel *wheel = [Wheel new];
+    Wheel \*wheel = [Wheel new];
     NSLog(@"这是汽车的轮胎");
     return wheel;
 }
