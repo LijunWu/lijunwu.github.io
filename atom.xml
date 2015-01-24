@@ -4,7 +4,7 @@
   <title><![CDATA[Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2015-01-24T19:08:23+08:00</updated>
+  <updated>2015-01-24T19:16:10+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[设计模式-抽象工厂]]></title>
-    <link href="http://lijunwu.github.io/blog/2015/01/22/she-ji-mo-shi-chou-xiang-gong-han/"/>
-    <updated>2015-01-22T11:50:59+08:00</updated>
-    <id>http://lijunwu.github.io/blog/2015/01/22/she-ji-mo-shi-chou-xiang-gong-han</id>
+    <link href="http://lijunwu.github.io/blog/2015/01/24/she-ji-mo-shi-chou-xiang-gong-han/"/>
+    <updated>2015-01-24T19:15:28+08:00</updated>
+    <id>http://lijunwu.github.io/blog/2015/01/24/she-ji-mo-shi-chou-xiang-gong-han</id>
     <content type="html"><![CDATA[<h2>什么是抽象工厂</h2>
 
 <p style="color:#666666;font-weight:bold;font-size:18px;line-height: 130%;text-indent:20pt">
