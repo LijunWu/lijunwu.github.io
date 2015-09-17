@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://lijunwu.github.io/blog/2015/09/16/uitextview-xian-zhi-zi-fu-shu-ru/</loc>
+    <lastmod>2015-09-16T20:48:54+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://lijunwu.github.io/blog/2015/01/24/she-ji-mo-shi-chou-xiang-gong-han/</loc>
     <lastmod>2015-01-24T19:15:28+08:00</lastmod>
   </url>
@@ -22,5 +26,8 @@
   </url>
   <url>
     <loc>http://lijunwu.github.io/blog/categories/she-ji-mo-shi/</loc>
+  </url>
+  <url>
+    <loc>http://lijunwu.github.io/blog/categories/ios/</loc>
   </url>
 </urlset>
