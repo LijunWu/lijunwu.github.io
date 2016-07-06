@@ -4,7 +4,7 @@
   <title><![CDATA[Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2015-09-17T15:48:41+08:00</updated>
+  <updated>2016-07-06T15:47:36+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -12,6 +12,193 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[NSDate & NSDateFormatter]]></title>
+    <link href="http://lijunwu.github.io/blog/2016/06/13/nsdatede-ge-shi-hua/"/>
+    <updated>2016-06-13T13:20:55+08:00</updated>
+    <id>http://lijunwu.github.io/blog/2016/06/13/nsdatede-ge-shi-hua</id>
+    <content type="html"><![CDATA[<p> iOS/MacOS系统中，用NSDate这个类来表示日期和时间。开发中，我们常常需要将一个NSDate对象格式化为NSString对象）或者将一个NSString对象解析为NSDate对象，或者反之。这两个过程都需要借助NSDateFormatter这个类，这个文章主要介绍NSDateFormatter的一些用法。</p>
+
+<h4>NSDateFormatter</h4>
+
+<p>NSDateFormatter表示的是一种日期的格式，通过NSDateFormatter，就可以进行NSDate和NSString的之间的转换。date format提供了一些可以配置的属性，最常用到的有下面几个：</p>
+
+<ul>
+<li>locale</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@property</span><span class="p">(</span><span class="k">copy</span><span class="p">)</span> <span class="bp">NSLocale</span> <span class="o">*</span><span class="n">locale</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>NSLocale对象包含了语言、地区等一些信息，formatter在进行格式转换时需要参考NSLocale对象，它需要知道转化前的字符串的语言，或者要把NSDate转化成什么语言的字符串，是显示『星期三』还是『Wednesday』。如果没有给formatter指定locale，那么它会取当前系统中的这个值。每一个NSLocale实例对应着一个地区标识符，例如en_US，fr_FR，ja_JP和en_GB，这些标识符包含一个语言码（例如en代表英语）和一个地区码（例如US代表美国）。</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-06—NSDate/01.jpg" width="500"></p>
+
+<ul>
+<li>timeZone</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@property</span><span class="p">(</span><span class="k">copy</span><span class="p">)</span> <span class="bp">NSTimeZone</span> <span class="o">*</span><span class="n">timeZone</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于一个给定的date，在不同时区所表示的时间是不同的。同locale一样，如果这里不设置timeZone，formatter就会默认使用系统的timeZone。创建一个时区有两种方式：一是设置相对于中时区的时间差，二是指定时区的名称。下图表示了当前时间，分别设置为中时区和东八区所显示出来的时间。</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-06—NSDate/02.jpg" width="400"></p>
+
+<ul>
+<li>dateStyle、timeStyle</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@property</span> <span class="n">NSDateFormatterStyle</span> <span class="n">dateStyle</span><span class="p">;</span>
+</span><span class='line'><span class="k">@property</span> <span class="n">NSDateFormatterStyle</span> <span class="n">timeStyle</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>系统为我们预定义了几种时间显示格式，我们只需要选择并设置合适的formatter style就可以。</p>
+
+<ul>
+<li>dateFormat</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">@property</span><span class="p">(</span><span class="k">copy</span><span class="p">)</span> <span class="bp">NSString</span> <span class="o">*</span><span class="n">dateFormat</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果我们需要自定义时间显示的样式，或者要将一个自定义样式的时间字符串转化为NSDate对象，我们就需要设置这里的dateFormat；这个后面详细举例。</p>
+
+<h4>使用系统预定义样式展示日期和时间</h4>
+
+<p>使用系统预定义样式的代码比较简单，只需要设置formatter的dataStyle或timeStyle就可以了，但是要注意，日期（年月日）和时间需要分开设置，不设置就不会显示；</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'>    <span class="bp">NSDate</span> <span class="o">*</span><span class="n">date</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDate</span> <span class="n">date</span><span class="p">];</span>
+</span><span class='line'>    <span class="bp">NSDateFormatter</span> <span class="o">*</span><span class="n">formatter</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDateFormatter</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'>    <span class="n">formatter</span><span class="p">.</span><span class="n">dateStyle</span> <span class="o">=</span> <span class="n">NSDateFormatterNoStyle</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">formatter</span><span class="p">.</span><span class="n">timeStyle</span> <span class="o">=</span> <span class="n">NSDateFormatterNoStyle</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">preNoStyleLB</span> <span class="nl">setText</span><span class="p">:[</span><span class="n">formatter</span> <span class="nl">stringFromDate</span><span class="p">:</span><span class="n">date</span><span class="p">]];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>下图展示了不同style下的时间显示样式。</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-06—NSDate/03.jpg" width="400"></p>
+
+<h4>使用自定义的Formatter string展示日期和时间</h4>
+
+<p>自定义时间格式需要设置formatter的dateFormat属性，这个格式字符串使用Unicode Technical #35标准中的格式匹配模式。如果格式匹配符是”yyyy-MM-dd HH:mm:ss”，那转化后的时间字符串就是”2016-06-17 23:40:44”这样子的。自定义时间格式的使用主要有两种场景：</p>
+
+<ul>
+<li>Fixed Formats（固定格式）</li>
+<li>Custom Formats for User-Visible Dates</li>
+</ul>
+
+
+<p>接下来说说这两种场景的使用：</p>
+
+<h5>Fixed Formats（固定格式）</h5>
+
+<p>这个比较好理解，就是格式不变嘛，直接将一个表示时间格式的字符串设置为dataFormat。我们前一个例子就是固定格式的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="bp">NSDateFormatter</span> <span class="o">*</span><span class="n">dateFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSDateFormatter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">dateFormatter</span> <span class="nl">setDateFormat</span><span class="p">:</span><span class="s">@&quot;yyyy-MM-dd &#39;at’ HH:mm EEE”];</span>
+</span><span class='line'>
+</span><span class='line'><span class="bp">NSDate</span> <span class="o">*</span><span class="n">date</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDate</span> <span class="n">date</span><span class="p">];</span>
+</span><span class='line'><span class="bp">NSString</span> <span class="o">*</span><span class="n">formattedDateString</span> <span class="o">=</span> <span class="p">[</span><span class="n">dateFormatter</span> <span class="nl">stringFromDate</span><span class="p">:</span><span class="n">date</span><span class="p">];</span><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;formattedDateString: %@&quot;</span><span class="p">,</span> <span class="n">formattedDateString</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// formattedDateString: 2016-06-17 at 13:00 周五</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意：如果没有设置locale和time zone的话，会默认参考用户偏好设置中的相关设置。</p>
+
+<h5>Custom Formats for User-Visible Dates</h5>
+
+<p>这一种不太好翻译，大概理解的意思就是会根据locale，也就是当前用户的偏好习惯来自动生成一个 format string（fixed formats是写死的）。</p>
+
+<p>你只提供你需要显示的date components，要显示日期？星期几？还是时间？等等，然后date formatter会根据你提供的locale，给这个format string在合适的地方加上一些标号，并按照locale里包含的用户习惯重新对这个date components排序。下面有个例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="bp">NSString</span> <span class="o">*</span><span class="n">formatString</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDateFormatter</span> <span class="nl">dateFormatFromTemplate</span><span class="p">:</span><span class="s">@&quot;EdMMM&quot;</span> <span class="nl">options</span><span class="p">:</span><span class="mi">0</span>
+</span><span class='line'>                                          <span class="nl">locale</span><span class="p">:[</span><span class="bp">NSLocale</span> <span class="nl">localeWithLocaleIdentifier</span><span class="p">:@</span><span class="err">“</span><span class="n">en_US</span><span class="s">&quot;]];</span>
+</span><span class='line'><span class="bp">NSDateFormatter</span> <span class="o">*</span><span class="n">dateFormatter</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSDateFormatter</span> <span class="n">alloc</span><span class="p">]</span> <span class="n">init</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="n">dateFormatter</span> <span class="nl">setDateFormat</span><span class="p">:</span><span class="n">formatString</span><span class="p">];</span>
+</span><span class='line'><span class="bp">NSString</span> <span class="o">*</span><span class="n">todayString</span> <span class="o">=</span> <span class="p">[</span><span class="n">dateFormatter</span> <span class="nl">stringFromDate</span><span class="p">:[</span><span class="bp">NSDate</span> <span class="n">date</span><span class="p">]];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;todayString: %@&quot;</span><span class="p">,</span> <span class="n">todayString</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// 代码打印的结果是： 周五 6月17</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为什么这是了locale是”en_US”，打印出来的日期却还是中文呢？</p>
+
+<p>原因是上面这段代码中，dataFormatter的locale使用了系统默认的locale值，而系统语言是”zh_CN”，我们提供的locale只是为了生成一个给美国人（en_US）看的，符合他们阅读习惯的一个format string，这个值并没有影响到dataFormatter本身，如果想要让打印的日期是英文，那我们必须加上下面这一行代码：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">[</span><span class="n">dateFormatter</span> <span class="nl">setLocale</span><span class="p">:[</span><span class="bp">NSLocale</span> <span class="nl">localeWithLocaleIdentifier</span><span class="p">:</span><span class="s">@&quot;en_US&quot;</span><span class="p">]];</span><span class="err">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这是打印的结果就是： Fri,Jun 17。</p>
+
+<p>一般的话，dataFormatter的locale和生成Format string时用的locale是一样的，毕竟展示出来的语言要符合该语言本身的使用习惯。</p>
+
+<p>下面这个例子就是说明了英国和美国，在显示日期上的不同习惯。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="bp">NSLocale</span> <span class="o">*</span><span class="n">usLocale</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSLocale</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithLocaleIdentifier</span><span class="p">:</span><span class="s">@&quot;en_US&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="bp">NSString</span> <span class="o">*</span><span class="n">usFormatString</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDateFormatter</span> <span class="nl">dateFormatFromTemplate</span><span class="p">:</span><span class="s">@&quot;EdMMM&quot;</span> <span class="nl">options</span><span class="p">:</span><span class="mi">0</span> <span class="nl">locale</span><span class="p">:</span><span class="n">usLocale</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;usFormatterString: %@&quot;</span><span class="p">,</span> <span class="n">usFormatString</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// Output: usFormatterString: EEE, MMM d.</span>
+</span><span class='line'>
+</span><span class='line'><span class="bp">NSLocale</span> <span class="o">*</span><span class="n">gbLocale</span> <span class="o">=</span> <span class="p">[[</span><span class="bp">NSLocale</span> <span class="n">alloc</span><span class="p">]</span> <span class="nl">initWithLocaleIdentifier</span><span class="p">:</span><span class="s">@&quot;en_GB&quot;</span><span class="p">];</span>
+</span><span class='line'><span class="bp">NSString</span> <span class="o">*</span><span class="n">gbFormatString</span> <span class="o">=</span> <span class="p">[</span><span class="bp">NSDateFormatter</span> <span class="nl">dateFormatFromTemplate</span><span class="p">:</span><span class="s">@&quot;EdMMM&quot;</span> <span class="nl">options</span><span class="p">:</span><span class="mi">0</span> <span class="nl">locale</span><span class="p">:</span><span class="n">gbLocale</span><span class="p">];</span>
+</span><span class='line'><span class="n">NSLog</span><span class="p">(</span><span class="s">@&quot;gbFormatterString: %@&quot;</span><span class="p">,</span> <span class="n">gbFormatString</span><span class="p">);</span>
+</span><span class='line'><span class="c1">// Output: gbFormatterString: EEE d MMM.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>参考链接：</h4>
+
+<ul>
+<li>NSHipster.cn ：<a href="http://nshipster.cn/nslocale/">NSLocale</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[UITextView 限制字符输入]]></title>
