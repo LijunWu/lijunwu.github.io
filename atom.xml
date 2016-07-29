@@ -4,7 +4,7 @@
   <title><![CDATA[Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2016-07-06T16:08:47+08:00</updated>
+  <updated>2016-07-29T14:45:52+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -12,6 +12,349 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[UICollectionView的简单使用]]></title>
+    <link href="http://lijunwu.github.io/blog/2016/07/29/uicollectionviewde-jian-dan-shi-yong/"/>
+    <updated>2016-07-29T13:48:51+08:00</updated>
+    <id>http://lijunwu.github.io/blog/2016/07/29/uicollectionviewde-jian-dan-shi-yong</id>
+    <content type="html"><![CDATA[<h3>UICollectionView概述</h3>
+
+<p>UICollectionView是iOS6中提供的一种新的数据展示方式。与Table View一样，Collection View的设计中也有Data Source和Delegate，Data Source负责内容部分，Delegate负责交互部分。除此之外，Collection View还增加了一个Layout，通过提供不同的Layout，Collection View可以展示出不同的视图排列。</p>
+
+<p>实现一个Collection View需要用到多个类及协议，把它们按角色分类如下：</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/01.jpg" width="800"></p>
+
+<h4>Top-level containment and management</h4>
+
+<p>UICollectionView充当了一个管理中枢的角色，它通过Data Source获取内容，通过Layout获取布局信息，然后计算每个view的大小、位置等信息，最终将View呈现出来。</p>
+
+<h4>Content management</h4>
+
+<p>Collection View中的内容主要由Data Source提供，Delegate负责的是与交互相关的部分；</p>
+
+<p>Data Source必须提供几个基本数据信息：</p>
+
+<ul>
+<li>collection view包含几个section；</li>
+<li>每个section中包含几个item；</li>
+<li>对于一个给定的section或item，用哪个视图来展示相应的内容；</li>
+</ul>
+
+
+<p>由Data Source提供的视图包括Cells和Supplementary View（追加视图），这两者都是数据驱动的，并且它们都是Reusable View的子类。     Data Source通过dequeueReusableCellWithReuseIdentifier或dequeueReusableSupplementaryViewOfKind方法向Collection View获取一个view的实例，填充好数据，再返回给Collection View。</p>
+
+<h4>Presentation</h4>
+
+<p>Collection View中展示的view都是可重用的，这种设计与Table View是一致的。所有的可重用视图均继承UICollectionReusableView类，     Collection View中主要有三类可重用视图：</p>
+
+<ul>
+<li><p>Cells</p>
+
+<p>  用于展示主要内容；UIKit提供了UICollectionViewCell类，有选中和高亮状态属性。</p></li>
+<li><p>SupplementaryView</p>
+
+<p>  用于展示section的一些信息，非必须的。同Cell一样，它也是数据驱动的。</p></li>
+<li><p>Decoration views</p>
+
+<p>  装饰视图，主要用来做section的背景，非必须的。它仅仅是视图相关的，不与任何数据绑定，由Layout对象管理；</p></li>
+</ul>
+
+
+<p>前面说到，Data Source可以通过dequeueReusableXXX的方法向Collection View获取一个cell或supplementary view的实例，但在这之前，你必须已经向Collection View注册过这两种视图，注册的方法有两种：registerNib或registerClass，具体方法如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 注册cell</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerClass:</span><span class="p">(</span><span class="n">nullable</span> <span class="kt">Class</span><span class="p">)</span><span class="nv">cellClass</span> <span class="nf">forCellWithReuseIdentifier:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">identifier</span><span class="p">;</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerNib:</span><span class="p">(</span><span class="n">nullable</span> <span class="bp">UINib</span> <span class="o">*</span><span class="p">)</span><span class="nv">nib</span> <span class="nf">forCellWithReuseIdentifier:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">identifier</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// 注册supplementary view</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerClass:</span><span class="p">(</span><span class="n">nullable</span> <span class="kt">Class</span><span class="p">)</span><span class="nv">viewClass</span> <span class="nf">forSupplementaryViewOfKind:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">elementKind</span> <span class="nf">withReuseIdentifier:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">identifier</span><span class="p">;</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerNib:</span><span class="p">(</span><span class="n">nullable</span> <span class="bp">UINib</span> <span class="o">*</span><span class="p">)</span><span class="nv">nib</span> <span class="nf">forSupplementaryViewOfKind:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">kind</span> <span class="nf">withReuseIdentifier:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">identifier</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于Decoration View，由于它是数据无关的，只是视图相关的，所以它是由Layout对象管理，它的注册过程也是在Layout类中完成的。在UICollectionViewLayout类中提供了注册Decoration View的方法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerClass:</span><span class="p">(</span><span class="n">nullable</span> <span class="kt">Class</span><span class="p">)</span><span class="nv">viewClass</span> <span class="nf">forDecorationViewOfKind:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">elementKind</span><span class="p">;</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">registerNib:</span><span class="p">(</span><span class="n">nullable</span> <span class="bp">UINib</span> <span class="o">*</span><span class="p">)</span><span class="nv">nib</span> <span class="nf">forDecorationViewOfKind:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">elementKind</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Layout</h4>
+
+<p>这是Collection View与Table View最大的不同。尽管Data Source已经提供了View（cell和supplementary view）以及view的内容，但每个view的位置及最终展示形式都是由Layout决定的。Collection View在布局时，会向Layout请求布局信息和view的外观信息，Layout提供了一个UICollectionViewLayoutAttributes类来封装这些信息，包括view的大小、位置以及其他一些与外观展示有关的属性。每个view都会对应一个UICollectionViewLayoutAttributes对象，所以Layout实际上是包含了一个UICollectionViewLayoutAttributes列表。</p>
+
+<ul>
+<li><p>Flow Layout</p>
+
+<p>  iOS6，UIKit中为我们提供了一种常用的布局：Flow Layout，它继承基本布局类UICollectionViewLayout。它是 line-based breaking 布局，（items排成一行直到行满，再继续往下一行上去排，直到所有items都排列完成）。通过实现Flow Layout的一些代理方法，可以指定每个item的大小、item之间的距离、行与行之间的距离等等。另外，在Flow Layout中，系统提供了两种类型的supplementary view，分别为header（UICollectionElementKindSectionHeader）和footer（UICollectionElementKindSectionFooter）.</p></li>
+<li><p>Transition Layou</p>
+
+<p>  iOS7，UIKit又增加了一种布局类型：Transition Layout，转场布局。一般我们直接setCollectionViewLayout：时也会触发一个从原有Layout到新的Layout的过度动画，但是通过Transition Layout，我们可以对动画过程加一些控制或交互。</p></li>
+</ul>
+
+
+<h3>UICollectionView的使用</h3>
+
+<p>我们项目中有一个小需求，大概是下面这个样子：</p>
+
+<p> <img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/02.png" width="222"></p>
+
+<p>从视觉上来看，有多个section，每个section包含多个item，而所有item又是网格排列的，所以UICollectionView应该是比较合适的，布局的话可以用系统提供的Flow Layout，满足我们网格排列的需求，而且它刚好也提供了Section Header View，这样我们就不用自己去创建一个UICollectionViewLayout的子类了；</p>
+
+<p>再从交互上看，要求collection view多选，但是每个section里限制只能选中一个，UICollectionView没有提供相应的API，所以这里我们需要做些额外的工作来控制每个Section里的选中情况。</p>
+
+<ul>
+<li>首先创建一个UICollectionView的实例，指定Data Source和Delegate。K12StorePickerCell用来展示每个item的内容，K12StorePickHeaderView用来展示每个section的header，将这两个view注册Collection View。布局方式用系统提供的Flow Layout。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="nb">self</span><span class="p">.</span><span class="n">pickerCV</span><span class="p">.</span><span class="n">dataSource</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
+</span><span class='line'><span class="nb">self</span><span class="p">.</span><span class="n">pickerCV</span><span class="p">.</span><span class="n">delegate</span> <span class="o">=</span> <span class="nb">self</span><span class="p">;</span>
+</span><span class='line'><span class="nb">self</span><span class="p">.</span><span class="n">pickerCV</span><span class="p">.</span><span class="n">allowsMultipleSelection</span> <span class="o">=</span> <span class="nb">YES</span><span class="p">;</span>
+</span><span class='line'><span class="nb">self</span><span class="p">.</span><span class="n">pickerCV</span><span class="p">.</span><span class="n">collectionViewLayout</span> <span class="o">=</span> <span class="p">[</span><span class="bp">UICollectionViewLayout</span> <span class="n">new</span><span class="p">];</span>
+</span><span class='line'><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">pickerCV</span> <span class="nl">registerNib</span><span class="p">:[</span><span class="n">K12StorePickerCell</span> <span class="n">nib</span><span class="p">]</span> <span class="nl">forCellWithReuseIdentifier</span><span class="p">:</span><span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">K12StorePickerCell</span> <span class="k">class</span><span class="p">])];</span>
+</span><span class='line'><span class="p">[</span><span class="nb">self</span><span class="p">.</span><span class="n">pickerCV</span> <span class="nl">registerNib</span><span class="p">:[</span><span class="n">K12StorePickHeaderView</span> <span class="n">nib</span><span class="p">]</span> <span class="nl">forSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span> <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">K12StorePickHeaderView</span> <span class="k">class</span><span class="p">])];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>实现Data Source</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">numberOfItemsInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="bp">NSInteger</span> <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="c1">// 返回每个section中包含的item的个数</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">count</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">UICollectionViewCell</span> <span class="o">*</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">cellForItemAtIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">K12StorePickerCell</span> <span class="o">*</span><span class="n">cell</span> <span class="o">=</span> <span class="p">[</span><span class="n">collectionView</span> <span class="nl">dequeueReusableCellWithReuseIdentifier</span><span class="p">:</span><span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">K12StorePickerCell</span> <span class="k">class</span><span class="p">])</span> <span class="nl">forIndexPath</span><span class="p">:</span><span class="n">indexPath</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 填充每个cell的内容；</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">cell</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">UICollectionReusableView</span> <span class="o">*</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">viewForSupplementaryElementOfKind:</span><span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">kind</span> <span class="nf">atIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// UICollectionElementKindSectionHeader是在Flow Layout中定义的一种Supplementary View；</span>
+</span><span class='line'>    <span class="n">K12StorePickHeaderView</span> <span class="o">*</span><span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="n">collectionView</span> <span class="nl">dequeueReusableSupplementaryViewOfKind</span><span class="p">:</span><span class="n">UICollectionElementKindSectionHeader</span> <span class="nl">withReuseIdentifier</span><span class="p">:</span><span class="n">NSStringFromClass</span><span class="p">([</span><span class="n">K12StorePickHeaderView</span> <span class="k">class</span><span class="p">])</span> <span class="nl">forIndexPath</span><span class="p">:</span><span class="n">indexPath</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 填充每个header的内容；</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">header</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nf">numberOfSectionsInCollectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">4</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>实现Delegate</li>
+</ul>
+
+
+<p>我们的需求是每个section种有且只能有一个item被选中，所以我们会将每个section中被选中的item对应的indexPath记下来。当用户选择了一个新的item时，会触发didSelectItemAtIndexPath：方法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">didSelectItemAtIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="c1">// 先将同一个section中已被选中的对象deselected；</span>
+</span><span class='line'>    <span class="p">[</span><span class="n">collectionView</span> <span class="nl">deselectItemAtIndexPath</span><span class="p">:</span><span class="nb">self</span><span class="p">.</span><span class="n">selectedIndexPath</span> <span class="nl">animated</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
+</span><span class='line'>    <span class="c1">// 再将当前的indexPath标记成选中</span>
+</span><span class='line'>    <span class="nb">self</span><span class="p">.</span><span class="n">selectedIndexPath</span> <span class="o">=</span> <span class="n">indexPath</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当用户点击一个已经选中的item时，会触发shouldDeselectItemAtIndexPath方法，我们的需求中每个section中至少且只有一个被选中的item，所以这个方法应当返回NO；</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="kt">BOOL</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">shouldDeselectItemAtIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">NO</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>实现Flow Layout的Delegate</li>
+</ul>
+
+
+<p>Flow Layout为用户提供了几个方法用来设置item大小、行间距、item间距等信息；在这里我们主要实现了下面几个方法：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="c1">// 提供每个item的尺寸大小</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span><span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">sizeForItemAtIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">indexPath</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// 设置section的内边距（不影响header和footer）</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">UIEdgeInsets</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span><span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">insetForSectionAtIndex:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// 最小的行间距</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span><span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">minimumLineSpacingForSectionAtIndex:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// 处于同一行的item之间的最小距离</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span><span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">minimumInteritemSpacingForSectionAtIndex:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span><span class="p">;</span>
+</span><span class='line'><span class="c1">// Header的尺寸</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">CGSize</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span><span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">referenceSizeForHeaderInSection:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>至此，一个基本的Collection View搭配Flow Layout的使用就完成了，撒花。</p>
+
+<p>但是后来，我们遇到了一些特殊情况。</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/03.png" width="400"></p>
+
+<p>如果限制了item的默认大小，当某个item的内容过长时，就会显示不下。所以后来我拿到了这样的视觉稿：内容超过item默认大小的，就按实际大小展示。</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/04.png" width="400"></p>
+
+<p>修改完代码后，新的问题出现了。程序运行的效果是这样的：</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/05.png" width="400"></p>
+
+<p>这里补充说下Flow Layout的布局方式：按一条直线路径去排列item，当一行没有足够的空间去放置下一个item时，就切换到下一行，然后继续排列剩下的item。如下图。</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/06.png" width="578"></p>
+
+<p>还记得我们在Flow Layout的delegate中实现的两个关于item间距及行间距的方法吗？</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span><span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">minimumLineSpacingForSectionAtIndex:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span><span class="p">;</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="n">CGFloat</span><span class="p">)</span><span class="nf">collectionView:</span><span class="p">(</span><span class="bp">UICollectionView</span> <span class="o">*</span><span class="p">)</span><span class="nv">collectionView</span> <span class="nf">layout:</span><span class="p">(</span><span class="bp">UICollectionViewLayout</span><span class="o">*</span><span class="p">)</span><span class="nv">collectionViewLayout</span> <span class="nf">minimumInteritemSpacingForSectionAtIndex:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span><span class="nv">section</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>这里我们指定的是最小距离，实际情况是，Layout有可能增大item之间的间距。
+当item的大小不固定时，如果某一行还有一些空间刚好足以放下一个item，那这时候，item之间的距离就是刚好等于minimumInteritemSpacing。但是如果某一行的结尾处还多出一些空间，Layout就会增大item之间的距离，直到最后一个item紧贴到尾部边缘。</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/07.png" width="513"></p>
+
+<p>为了解决这个问题，我先研究了下Layout计算布局的过程。官网上有一张图，大概描述了这个过程中重要的三步：</p>
+
+<p><img class="center" src="http://lijunwu.github.io/images/2016-07-29-UICollectionView/08.png" width="697"></p>
+
+<ul>
+<li><p>在Collection View第一次展示或者尺寸变化时，会调用Layout的-prepareLayout方法，这是告诉Layout，Collection View准备要向Layout获取布局信息了。当Layout被invalidate之后，collection view向其获取布局信息之前，这个方法会再一次被调用。这个方法中主要是在计算布局之前预处理一些事情。例如：</p>
+
+<ul>
+<li>通过Collection View.dataSource获取section的数目及每个section中的item数目；</li>
+<li>如果是Flow Layout布局方式，会向Flow Layout Delegate获取每个item的大小及Header、Footer的尺寸。</li>
+</ul>
+
+
+<p>  在这一步，需要计算出足够的信息，为第二步做准备；</p></li>
+<li><p>接着，Collection View会调用Layout的-collectionViewContentSize方法，这个方法需要根据前面的计算信息，返回给Collection View整个内容区域的大小，这样Collection View可以确定其内容滚动的方向。在Flow Layout的默认实现中，它会调整内容的布局，使其只在一个方向滚动。</p></li>
+<li>在确定了Collection View的滚动方向后，Collection View调用Layout的layoutAttributesForElementsInRect:方法来获取指定区域的所有view的布局属性。</li>
+</ul>
+
+
+<p>在这三步完成之后，布局过程基本就完成了。在这之后，所有cell和view的熟悉都不会改变，除非你调用Layout的invalidateLayout方法，这个方法会让你上面三步布局过程再次执行一遍。Collection View本身也会调用Layout的invalidateLayout方法。当你去滚动Collection View时，如果Layout对象的-shouldInvalidateLayoutForBoundsChange:方法返回YES，那么也会触发invalidateLayout被执行。</p>
+
+<p>通过上面的分析，可以看出来，Flow Layout在计算布局过程的第一步时，自动改变了item的一些位置属性。那么我们可以在这一步之后，对所有view的位置做个校准，然后再返回给Collection View。于是，我们创建了一个UICollectionViewFlowLayout的子类，重写了其layoutAttributesForElementsInRect：方法，主要代码如下：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="k">if</span> <span class="p">(</span><span class="n">currentLayoutAttributes</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">y</span> <span class="o">!=</span> <span class="n">prevLayoutAttributes</span><span class="p">.</span><span class="n">center</span><span class="p">.</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="bp">CGRect</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">currentLayoutAttributes</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">padding</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">currentLayoutAttributes</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">origin</span> <span class="o">+</span> <span class="n">interitemSpace</span> <span class="o">+</span> <span class="n">currentLayoutAttributes</span><span class="p">.</span><span class="n">frame</span><span class="p">.</span><span class="n">size</span><span class="p">.</span><span class="n">width</span> <span class="o">&lt;</span> <span class="nb">self</span><span class="p">.</span><span class="n">collectionViewContentSize</span><span class="p">.</span><span class="n">width</span> <span class="o">-</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">padding</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="bp">CGRect</span> <span class="n">frame</span> <span class="o">=</span> <span class="n">currentLayoutAttributes</span><span class="p">.</span><span class="n">frame</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">frame</span><span class="p">.</span><span class="n">origin</span><span class="p">.</span><span class="n">x</span> <span class="o">=</span> <span class="n">origin</span> <span class="o">+</span> <span class="n">interitemSpace</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">currentLayoutAttributes</span><span class="p">.</span><span class="n">frame</span> <span class="o">=</span> <span class="n">frame</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>要注意的是，这里直接修改了缓存在Layout中的attributes。</p>
+
+<p>当我们执行reloadData操作时，会触发invalidateLayout，Layout会重新计算一遍布局，把三个步骤再执行一遍，计算完布局信息然后更新view的时候，会有一个从过渡动画，这时候Layout会有两个方法被调用：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='objc'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">UICollectionViewLayoutAttributes</span> <span class="o">*</span><span class="p">)</span><span class="nf">finalLayoutAttributesForDisappearingItemAtIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">itemIndexPath</span><span class="p">;</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">UICollectionViewLayoutAttributes</span> <span class="o">*</span><span class="p">)</span><span class="nf">initialLayoutAttributesForAppearingItemAtIndexPath:</span><span class="p">(</span><span class="bp">NSIndexPath</span> <span class="o">*</span><span class="p">)</span><span class="nv">itemIndexPath</span><span class="p">;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>对于所有即将disappear的view，通过第一个方法获取这些view的final attribute，然后执行一个渐变消失的动画，从现在的状态过渡到final状态。
+对于即将要appear的view，通过第二个方法获取他们initial attribute，这个方法内部会调用layoutAttributesForItemAtIndexPath：方法，它所获得的attribute是通过计算来的，与缓存在Layout中的attribute是不一样的。过渡动画是从view的initial attribute状态到Layout中缓存的attribute状态，所以会看到view有一个位置上的变化。因此，也需要重写layoutAttributesForItemAtIndexPath：方法，返回一致的attribute。</p>
+
+<h4>参考链接：</h4>
+
+<ul>
+<li>王巍：<a href="https://onevcat.com/2012/06/introducing-collection-views/">UICollectionView基本介绍</a>、<a href="https://onevcat.com/2012/08/advanced-collection-view/">UICollectionView进阶</a></li>
+<li>纵横而乐：<a href="http://www.jianshu.com/p/40868928a1cf">创建自定义UICollectionView layout</a></li>
+<li>官方指南：<a href="https://developer.apple.com/library/ios/documentation/WindowsViews/Conceptual/CollectionViewPGforIOS/Introduction/Introduction.html#//apple_ref/doc/uid/TP40012334-CH1-SW1">Collection View Programming Guide for iOS</a></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[NSDate & NSDateFormatter]]></title>
