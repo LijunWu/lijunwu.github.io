@@ -4,7 +4,7 @@
   <title><![CDATA[Category:ios | Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2017-02-14T19:49:37+08:00</updated>
+  <updated>2017-02-14T20:04:44+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -351,7 +351,7 @@
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[NSDate & NSDateFormatter]]></title>
+    <title type="html"><![CDATA[iOS开发中显示『时间』时需要注意的细节]]></title>
     <link href="http://lijunwu.github.io/blog/2016/06/13/nsdatede-ge-shi-hua/"/>
     <updated>2016-06-13T13:20:55+08:00</updated>
     <id>http://lijunwu.github.io/blog/2016/06/13/nsdatede-ge-shi-hua</id>
@@ -515,13 +515,6 @@
 </span><span class='line'><span class="n">NSLog</span><span class="p">(@</span><span class="o">&amp;</span><span class="n">ldquo</span><span class="p">;</span><span class="nl">gbFormatterString</span><span class="p">:</span> <span class="o">%</span><span class="p">@</span><span class="o">&amp;</span><span class="n">rdquo</span><span class="p">;,</span> <span class="n">gbFormatString</span><span class="p">);</span>
 </span><span class='line'><span class="c1">// Output: gbFormatterString: EEE d MMM.</span>
 </span></code></pre></td></tr></table></div></figure></p>
-
-<h4>参考链接：</h4>
-
-<ul>
-<li>NSHipster.cn ：<a href="http://nshipster.cn/nslocale/">NSLocale</a></li>
-</ul>
-
 ]]></content>
   </entry>
   
