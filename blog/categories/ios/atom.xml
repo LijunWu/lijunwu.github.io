@@ -4,7 +4,7 @@
   <title><![CDATA[Category:ios | Amy's Blog]]></title>
   <link href="http://lijunwu.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://lijunwu.github.io/"/>
-  <updated>2016-07-29T17:47:59+08:00</updated>
+  <updated>2017-02-14T19:49:37+08:00</updated>
   <id>http://lijunwu.github.io/</id>
   <author>
     <name><![CDATA[吴丽君]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[UICollectionView的简单使用]]></title>
+    <title type="html"><![CDATA[UICollectionView在特殊场景使用中遇到的问题]]></title>
     <link href="http://lijunwu.github.io/blog/2016/07/29/uicollectionviewde-jian-dan-shi-yong/"/>
     <updated>2016-07-29T13:48:51+08:00</updated>
     <id>http://lijunwu.github.io/blog/2016/07/29/uicollectionviewde-jian-dan-shi-yong</id>
